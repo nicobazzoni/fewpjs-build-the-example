@@ -1,11 +1,36 @@
-// Defining text characters for the empty and full hearts for you to use later.
-const EMPTY_HEART = '♡'
-const FULL_HEART = '♥'
-
-// Your JavaScript code goes here!
 
 
+const heartStatus  = {
+  "♡": "♥",
+  "♥": "♡"
+};
 
+const blueHearts = {
+  "pink" : "",
+  "": "pink" 
+};
+
+const mediaHearts = document.querySelectorAll(".like-glyph")
+
+function likeFunction(e) {
+  const like = e.target
+  mimicServerCall("mimic")
+  
+    .then(function(msg){
+       like.innerText = heartStatus[like.innerText]
+        like.style.color = blueHearts[like.style.color]
+    })
+    .catch(function(error) {
+      const modal = document.getElementById("modal")
+      modal.className = ""
+      modal.innerText = error
+      setTimeout(() =>  modal.className = "hidden", 3000)
+    })
+}
+
+for (const glyph of mediaHearts) {
+  glyph.addEventListener("click", likeFunction);
+}
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
